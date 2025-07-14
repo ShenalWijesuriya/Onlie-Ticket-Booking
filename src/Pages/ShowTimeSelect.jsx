@@ -1,4 +1,3 @@
-// ShowTimeSelect.jsx
 import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 
@@ -37,40 +36,68 @@ export default function ShowTimeSelect() {
   };
 
   return (
-    <div className="bg-black min-h-screen text-white px-6 py-10">
+    <div className="bg-gradient-to-br from-black via-gray-900 to-black min-h-screen text-white px-4 py-10 font-sans">
       <div className="max-w-5xl mx-auto">
-        <div className="flex justify-between items-center mb-6">
-          <div className="flex items-center space-x-6">
-            <div className="w-8 h-8 rounded-full bg-pink-600 text-center leading-8 text-sm font-bold">1</div>
-            <div className="w-8 h-8 rounded-full border border-gray-400 text-center leading-8 text-sm">2</div>
-            <div className="w-8 h-8 rounded-full border border-gray-400 text-center leading-8 text-sm">3</div>
-            <div className="w-8 h-8 rounded-full border border-gray-400 text-center leading-8 text-sm">4</div>
+        {/* Progress Indicator */}
+        <div className="flex justify-between items-center mb-10">
+          <div className="flex items-center space-x-4">
+            {['1', '2', '3', '4'].map((step, index) => (
+              <div
+                key={index}
+                className={`w-9 h-9 rounded-full flex items-center justify-center font-bold text-sm transition ${
+                  index === 0
+                    ? 'bg-pink-600 text-white shadow-lg'
+                    : 'border border-gray-500 text-gray-300'
+                }`}
+              >
+                {step}
+              </div>
+            ))}
           </div>
-          <div className="text-gray-300 text-sm">Show timing selection → Seat Selection → Payment → E-Ticket</div>
+          <p className="text-sm text-gray-400">
+            Show Timing → Seat Selection → Payment → E-Ticket
+          </p>
         </div>
 
-        <h2 className="text-3xl font-bold text-pink-500 text-center mb-8">Show time Selection</h2>
+        {/* Title */}
+        <h1 className="text-4xl font-bold text-center text-pink-500 mb-10 tracking-wide">
+          Select Show Time
+        </h1>
 
-        <div className="flex items-center justify-center gap-3 overflow-x-auto mb-8">
-          <button className="w-8 h-8 bg-gray-700 rounded-full">❮</button>
+        {/* Day Selection */}
+        <div className="flex items-center justify-center gap-2 overflow-x-auto scrollbar-hide mb-10 px-4">
+          <button className="w-8 h-8 bg-gray-700 rounded-full flex items-center justify-center text-lg">
+            ❮
+          </button>
           {days.map((day, idx) => (
             <button
               key={idx}
               onClick={() => setSelectedDay(day)}
-              className={`px-4 py-2 rounded-md font-semibold transition ${
-                idx === 0 ? 'text-white' : 'text-black'
-              } ${selectedDay === day ? 'bg-pink-600 text-white' : 'bg-white'}`}
+              className={`px-4 py-2 rounded-lg font-semibold min-w-[120px] transition text-sm ${
+                selectedDay === day
+                  ? 'bg-pink-600 text-white shadow-md'
+                  : 'bg-white text-black hover:bg-pink-100'
+              }`}
             >
               {day}
             </button>
           ))}
-          <button className="w-8 h-8 bg-gray-700 rounded-full">❯</button>
+          <button className="w-8 h-8 bg-gray-700 rounded-full flex items-center justify-center text-lg">
+            ❯
+          </button>
         </div>
 
+        {/* Screen and Time Selection */}
         {Object.entries(screenTimes).map(([screen, times]) => (
-          <div key={screen} className="mb-6">
-            <h3 className="text-xl font-semibold mb-2 cursor-pointer" onClick={() => setSelectedScreen(screen)}>
-              {screen} {selectedScreen === screen && <span className="text-pink-400">(Selected)</span>}
+          <div key={screen} className="mb-8 bg-white/5 rounded-xl p-5 shadow-md">
+            <h3
+              className="text-lg font-semibold mb-3 cursor-pointer text-white flex items-center gap-2"
+              onClick={() => setSelectedScreen(screen)}
+            >
+              🎬 {screen}
+              {selectedScreen === screen && (
+                <span className="text-pink-400 text-sm">(Selected)</span>
+              )}
             </h3>
             <div className="flex flex-wrap gap-3">
               {times.map((time, idx) => (
@@ -80,9 +107,11 @@ export default function ShowTimeSelect() {
                     setSelectedScreen(screen);
                     setSelectedTime(time);
                   }}
-                  className={`px-4 py-2 rounded-md transition ${
-                    selectedTime === time && selectedScreen === screen ? 'bg-pink-600 text-white' : 'bg-white text-black'
-                  } hover:bg-pink-600 hover:text-white`}
+                  className={`px-4 py-2 rounded-md transition duration-200 font-medium text-sm ${
+                    selectedTime === time && selectedScreen === screen
+                      ? 'bg-pink-600 text-white'
+                      : 'bg-white text-black hover:bg-pink-100'
+                  }`}
                 >
                   {time}
                 </button>
@@ -91,12 +120,13 @@ export default function ShowTimeSelect() {
           </div>
         ))}
 
-        <div className="flex justify-end mt-10">
+        {/* Continue Button */}
+        <div className="flex justify-end mt-12">
           <button
             onClick={handleContinue}
-            className="px-6 py-2 bg-gray-700 text-white rounded-full hover:bg-pink-700 transition"
+            className="px-6 py-3 rounded-full bg-pink-600 hover:bg-pink-700 text-white font-bold shadow-lg transition"
           >
-            Continue Booking
+            Continue Booking →
           </button>
         </div>
       </div>
