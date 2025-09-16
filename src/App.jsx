@@ -18,6 +18,7 @@ function App() {
     <>
       <Navbar />
       <Routes>
+        
         <Route path="/" element={<HomePage />} />
         <Route path="/movies" element={<Movies />} /> {/* Updated to Movies component */}
         <Route path="/showtimes" element={<TimeTable />} />
